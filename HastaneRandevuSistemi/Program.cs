@@ -1,4 +1,4 @@
-using Hastane_Randevu_Sistemi.Data;
+using HastaneRandevuSistemi.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

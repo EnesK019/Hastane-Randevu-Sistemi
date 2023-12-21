@@ -1,0 +1,42 @@
+﻿@model HastaneRandevuSistemi.Models.Doktor
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Doktor</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DoktorAd)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DoktorAd)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DoktorSoyad)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DoktorSoyad)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PoliklinikId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PoliklinikId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.DoktorID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
