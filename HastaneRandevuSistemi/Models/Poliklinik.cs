@@ -13,6 +13,6 @@ namespace HastaneRandevuSistemi.Models
         [ForeignKey("HastaneId")]
         [Required]
         public int HastaneId { get; set; }
-        ICollection<Doktor>? Doktorlar { get; set; }
+        public ICollection<Doktor>? Doktorlar { get; set; }
     }
 }

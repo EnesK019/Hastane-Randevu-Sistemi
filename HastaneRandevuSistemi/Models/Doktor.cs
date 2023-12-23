@@ -20,7 +20,7 @@ namespace HastaneRandevuSistemi.Models
         [ForeignKey("PoliklinikId")]
         public int PoliklinikId { get; set; }
         public bool? IsActive { get; set; }
-        ICollection<CalismaGunu>? CalismaGunleri { get; set; }
-        ICollection<Randevu>? Randevular { get; set; }
+        public ICollection<CalismaGunu>? CalismaGunleri { get; set; }
+        public ICollection<Randevu>? Randevular { get; set; }
     }
 }

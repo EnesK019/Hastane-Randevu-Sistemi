@@ -2,8 +2,10 @@
 
 namespace HastaneRandevuSistemi.Models
 {
-    public class Kullanici : IdentityUser<int>
+    public class Kullanici : IdentityUser
     {
-        public string UserSurname { get; set; }
+        public string KullaniciAd { get; set; }
+        public string KullaniciSoyad { get; set; }
+        public string TcNo { get; set; }
     }
 }
