@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Hastane_Randevu_Sistemi.Models.Doktor>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DoktorAd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DoktorSoyad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DoktorAd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DoktorSoyad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.DoktorID">edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.DoktorID">details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.DoktorID">delete</a>
+                    </td>
+                }
+                else
+                {
+                    <td><a asp-action="Details" asp-route-id="@item.DoktorID">details</a></td>
+                }
+        </tr>
+}
+    </tbody>
+</table>
+<div>
+    <a class="w-100 btn btn-lg btn-primary " asp-controller="Doktor" asp-action="Create">Ekle</a>
+</div>
