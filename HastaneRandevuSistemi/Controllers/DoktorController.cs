@@ -48,11 +48,20 @@ namespace Hastane_Randevu_Sistemi.Controllers
             return View(doktor);
         }
 
+        public async Task<IActionResult> GetPoliklinikler(int hastaneId)
+        {
+            var poliklinikler = await _context.Poliklinik.Where(p => p.HastaneId == hastaneId).ToListAsync();
+            return Json(poliklinikler);
+        }
+
         // GET: Doktor/Create
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
-            ViewData["Poliklinikler"] = _context.Poliklinik.ToList();
+            ViewData["Hastaneler"] = _context.Hastane.ToList();
+            var poliklinikler = _context.Poliklinik.ToList();
+            
+            ViewData["Poliklinikler"] = poliklinikler;
             return View();
         }
 
@@ -62,7 +71,7 @@ namespace Hastane_Randevu_Sistemi.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("DoktorID,DoktorAd,DoktorSoyad,PoliklinikId,IsActive")] Doktor doktor)
+        public async Task<IActionResult> Create(Doktor doktor)
         {
             
             if (ModelState.IsValid)
@@ -79,7 +88,9 @@ namespace Hastane_Randevu_Sistemi.Controllers
         // GET: Doktor/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            ViewData["Poliklinikler"] = _context.Poliklinik.ToList();
+			ViewData["Hastaneler"] = _context.Hastane.ToList();
+			
+			ViewData["Poliklinikler"] = _context.Poliklinik.ToList();
             if (id == null || _context.Doktor == null)
             {
                 return NotFound();
@@ -99,7 +110,7 @@ namespace Hastane_Randevu_Sistemi.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("DoktorID,DoktorAd,DoktorSoyad,PoliklinikId,IsActive")] Doktor doktor)
+        public async Task<IActionResult> Edit(int id, Doktor doktor)
         {
             if (id != doktor.DoktorID)
             {

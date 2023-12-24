@@ -21,7 +21,7 @@
             <div class="form-group">
                     <label asp-for="HastaneId" class="control-label"></label>
 
-                    <select asp-for="HastaneId" class="form-select form-select-lg mb-3" aria-label="Large select example" asp-items="ViewBag.HastaneId">
+                    <select asp-for="HastaneId" class="form-select form-select-lg mb-3" aria-label="Large select example">
                         @foreach (var item in ViewData["hastaneler"] as List<Hastane>)
                         {
                             <option value="@item.HastaneID">@item.HastaneAdi</option>

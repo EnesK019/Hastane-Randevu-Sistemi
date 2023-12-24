@@ -12,7 +12,7 @@ namespace Hastane_Randevu_Sistemi.Models
         public int DoktorId { get; set; }
 
         [ForeignKey("KullaniciId")]
-        public int KullaniciId { get; set; }
+        public string KullaniciId { get; set; }
 
         [DataType(DataType.Date), Display(Name = "Randevu Tarihi"), DisplayFormat(DataFormatString = "{0:dd-MM-yyyy HH:mm}", ApplyFormatInEditMode = true)]
         [Required]

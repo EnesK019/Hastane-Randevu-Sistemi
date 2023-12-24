@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    
 }
 
 <h1>Create</h1>
@@ -22,16 +23,22 @@
                 <input asp-for="DoktorSoyad" class="form-control" />
                 <span asp-validation-for="DoktorSoyad" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PoliklinikId" class="control-label"></label>
-
-                <select asp-for="PoliklinikId" class="form-select form-select-lg mb-3" aria-label="Large select example">
-                    @foreach (var item in ViewData["Poliklinikler"] as List<Poliklinik>)
+            <br />
+            <div>
+                <label> Hastaneler</label>
+                <select class="form-select form-select-lg mb-3" aria-label="Large select example" onchange="GetPoliklinikler(this.value)">
+                    <option value="">Seçiniz</option>
+                    @foreach (var item in ViewData["Hastaneler"] as List<Hastane>)
                     {
-                        <option value="@item.PoliklinikID">@item.PoliklinikAdi</option>
+                        <option value="@item.HastaneID">@item.HastaneAdi</option>
                     }
                 </select>
-
+            </div>
+            <div class="form-group">
+                <label asp-for="PoliklinikId" class="control-label"></label>
+                <select id="PoliklinikId" asp-for="PoliklinikId" class="form-select form-select-lg mb-3" aria-label="Large select example">
+                    
+                </select>
                 <span asp-validation-for="PoliklinikId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -41,10 +48,34 @@
     </div>
 </div>
 
+
+
+
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        function GetPoliklinikler(hastaneId) {
+            $.ajax({
+                url: '@Url.Action("GetPoliklinikler", "Doktor")',
+                data: { hastaneId: hastaneId },
+                type: 'GET',
+                success: function (poliklinikler) {
+                    $("#PoliklinikId").empty(); // Önceki seçenekleri temizle
+                    $("#PoliklinikId").append($('<option value="">Seçiniz</option>'));
+                    $.each(poliklinikler, function (index, poliklinik) {
+                        $("#PoliklinikId").append($('<option value="' + poliklinik.poliklinikID + '">' + poliklinik.poliklinikAdi + '</option>'));
+                    });
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        }
+    </script>
 }

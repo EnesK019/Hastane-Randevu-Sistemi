@@ -35,7 +35,7 @@ namespace Hastane_Randevu_Sistemi.Controllers
             {
                 return NotFound();
             }
-
+            
             var calismaGunu = await _context.CalismaGunu
                 .FirstOrDefaultAsync(m => m.CalismaGunID == id);
             if (calismaGunu == null)

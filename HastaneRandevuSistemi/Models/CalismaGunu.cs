@@ -9,7 +9,7 @@ namespace Hastane_Randevu_Sistemi.Models
         public int CalismaGunID { get; set; }
         [Required]
         [MaxLength(7)]
-        public string Gunler { get; set; }
+        public string Gunler { get; set; }  
         [Required]
         public string Saatler { get; set; }
 
