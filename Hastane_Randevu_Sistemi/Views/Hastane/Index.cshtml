@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Hastane_Randevu_Sistemi.Models.Hastane>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.HastaneAdi)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.HastaneAdi)
+            </td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                    <td>
+                            <a asp-action="Edit" asp-route-id="@item.HastaneID">edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.HastaneID">details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.HastaneID">delete</a>
+                    </td>
+                    }
+                    else
+                    {
+                        <td><a asp-action="Details" asp-route-id="@item.HastaneID">details</a></td>
+                    }
+                    
+                                
+        </tr>
+
+            
+}
+    </tbody>
+</table>
+
+<div>
+    <a class="w-100 btn btn-lg btn-primary " asp-controller="Hastane" asp-action="Create">Ekle</a>
+</div>

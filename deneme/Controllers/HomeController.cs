@@ -1,9 +1,8 @@
-﻿using Hastane_Randevu_Sistemi.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using deneme.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace Hastane_Randevu_Sistemi.Controllers
+namespace deneme.Controllers
 {
     public class HomeController : Controller
     {
@@ -14,7 +13,6 @@ namespace Hastane_Randevu_Sistemi.Controllers
             _logger = logger;
         }
 
-        
         public IActionResult Index()
         {
             return View();
@@ -25,5 +23,10 @@ namespace Hastane_Randevu_Sistemi.Controllers
             return View();
         }
 
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
 }

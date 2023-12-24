@@ -4,6 +4,7 @@ using Hastane_Randevu_Sistemi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hastane_Randevu_Sistemi.Migrations
 {
     [DbContext(typeof(HastaneContext))]
-    partial class HastaneContextModelSnapshot : ModelSnapshot
+    [Migration("20231223162449_mig3")]
+    partial class mig3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,10 +111,9 @@ namespace Hastane_Randevu_Sistemi.Migrations
                     b.Property<int>("HastaneId")
                         .HasColumnType("int");
 
-                    b.Property<string>("PoliklinikAdi")
-                        .IsRequired()
+                    b.Property<int>("PoliklinikAdi")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("int");
 
                     b.HasKey("PoliklinikID");
 
@@ -393,13 +394,11 @@ namespace Hastane_Randevu_Sistemi.Migrations
 
             modelBuilder.Entity("Hastane_Randevu_Sistemi.Models.Poliklinik", b =>
                 {
-                    b.HasOne("Hastane_Randevu_Sistemi.Models.Hastane", "hastane")
+                    b.HasOne("Hastane_Randevu_Sistemi.Models.Hastane", null)
                         .WithMany("Poliklinikler")
                         .HasForeignKey("HastaneId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("hastane");
                 });
 
             modelBuilder.Entity("Hastane_Randevu_Sistemi.Models.Randevu", b =>

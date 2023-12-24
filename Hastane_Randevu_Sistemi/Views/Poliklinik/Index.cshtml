@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Hastane_Randevu_Sistemi.Models.Poliklinik>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PoliklinikAdi)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PoliklinikAdi)
+            </td>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.PoliklinikID">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.PoliklinikID">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.PoliklinikID">Delete</a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td><a asp-action="Details" asp-route-id="@item.PoliklinikID">Details</a></td>
+                    }
+                    
+                }
+            
+        </tr>
+}
+    </tbody>
+</table>
+<div>
+    <a class="w-100 btn btn-lg btn-primary " asp-controller="Poliklinik" asp-action="Create">Ekle</a>
+</div>
