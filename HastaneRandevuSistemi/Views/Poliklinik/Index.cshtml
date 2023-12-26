@@ -4,42 +4,46 @@
     ViewData["Title"] = "Index";
 }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.PoliklinikAdi)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PoliklinikAdi)
-            </td>
-                @if (User.Identity.IsAuthenticated)
-                {
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.PoliklinikID">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.PoliklinikID">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.PoliklinikID">Delete</a>
-                        </td>
-                    }
-                    else
-                    {
-                        <td><a asp-action="Details" asp-route-id="@item.PoliklinikID">Details</a></td>
-                    }
-                    
-                }
-            
-        </tr>
-}
-    </tbody>
+<table class="table table-responsive-lg">
+	<thead>
+		<tr>
+			<div class="row">
+				<div class="col-lg-10">
+					<h3 class="text-center">Poliklinikler</h3>
+				</div>
+				<div class="col-lg-2">
+					<a asp-action="Create" asp-route-id=""><img style="width: 45px; height: 45px;" src="~/images/arti.jpg" /></a>
+				</div>
+			</div>
+			<th>
+
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					<div class="row">
+						<div class="col-lg-10">
+							@Html.DisplayFor(modelItem => item.PoliklinikAdi)
+						</div>
+						<div class="col-lg-2">
+							@if (User.IsInRole("Admin"))
+							{
+								<a asp-action="Details" asp-route-id="@item.PoliklinikID"><img class="icon" src="~/images/detail.png" /></a>
+								<a asp-action="Edit" asp-route-id="@item.PoliklinikID"><img class="icon" src="~/images/düzenle.jpg" /></a>
+								<a asp-action="Delete" asp-route-id="@item.PoliklinikID"><img class="icon" src="~/images/carpi.png" /></a>
+							}
+							else
+							{
+								<a asp-action="Details" asp-route-id="@item.PoliklinikID"><img class="icon" src="~/images/detail.png" /></a>
+							}
+						</div>
+					</div>
+				</td>
+			</tr>
+		}
+	</tbody>
 </table>
-<div>
-    <a class="w-100 btn btn-lg btn-primary " asp-controller="Poliklinik" asp-action="Create">Ekle</a>
-</div>

@@ -1,10 +1,9 @@
 ﻿@model Hastane_Randevu_Sistemi.Models.Hastane
-<link rel="stylesheet" href="~/css/index.css" />
 @{
     ViewData["Title"] = "Delete";
 }
 <div>
-    <h4>Hastane</h4>
+    <h4>Hastane Sil</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -14,10 +13,11 @@
             @Html.DisplayFor(model => model.HastaneAdi)
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="HastaneID" />
-        <input type="submit" value="Delete" class="btn btn-danger" style="margin: 5px;"/> <br />
+        <input type="submit" value="Delete" class="btn btn-danger" style="margin: 5px;" onconfirm="confirm('Silmek istediğinize emin misiniz?');" />
         <a asp-action="Index"><img style="width: 40px; length: 25px;" src="~/images/geridon.png" /></a>
     </form>
 </div>
+

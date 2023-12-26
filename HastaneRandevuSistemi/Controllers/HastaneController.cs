@@ -33,6 +33,7 @@ namespace Hastane_Randevu_Sistemi.Controllers
         
         public async Task<IActionResult> Details(int? id)
         {
+            ViewData["Poliklinikler"] = _context.Poliklinik.Where(x => x.HastaneId == id).ToList();
             if (id == null || _context.Hastane == null)
             {
                 return NotFound();
