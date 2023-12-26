@@ -1,5 +1,5 @@
 ﻿@model Hastane_Randevu_Sistemi.Models.Hastane
-
+<link rel="stylesheet" href="~/css/index.css" />
 @{
     ViewData["Title"] = "Details";
 }
@@ -13,16 +13,12 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.HastaneAdi)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-9">
             @Html.DisplayFor(model => model.HastaneAdi)
         </dd>
+        <dd class="col-sm-1"><a asp-action="Edit" asp-route-id="@Model.HastaneID"><img class="icon" src="~/images/düzenle.jpg" /></a></dd>
     </dl>
 </div>
 <div>
-    @if (User.IsInRole("Admin"))
-    {
-        <a asp-action="Edit" asp-route-id="@Model?.HastaneID">Edit</a>
-    }
-     
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index"><img style="width: 40px; length: 25px;" src="~/images/geridon.png" /></a> 
 </div>

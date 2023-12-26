@@ -23,13 +23,17 @@
                 <input asp-for="DoktorSoyad" class="form-control" />
                 <span asp-validation-for="DoktorSoyad" class="text-danger"></span>
             </div>
-            <select class="form-select form-select-lg mb-3" aria-label="Large select example" onchange="GetPoliklinikler(this.value)">
-                <option value="">Seçiniz</option>
-                @foreach (var item in ViewData["Hastaneler"] as List<Hastane>)
-                {
-                    <option value="@item.HastaneID">@item.HastaneAdi</option>
-                }
-            </select>
+            <div class="form-group">
+                <label> Hastaneler </label>
+                <select class="form-select form-select-lg mb-3" aria-label="Large select example" onchange="GetPoliklinikler(this.value)">
+                
+                    <option value="">Seçiniz</option>
+                    @foreach (var item in ViewData["Hastaneler"] as List<Hastane>)
+                    {
+                        <option value="@item.HastaneID">@item.HastaneAdi</option>
+                    }
+                </select>
+            </div>
             <div class="form-group">
                 <label asp-for="PoliklinikId" class="control-label"></label>
 
@@ -38,11 +42,15 @@
 
                 <span asp-validation-for="PoliklinikId" class="text-danger"></span>
             </div>
-            @* <div class="form-group">
+             <div class="form-group">
                 <label asp-for="IsActive" class="control-label"></label>
-                <input asp-for="IsActive" class="form-control" />
+                <select asp-for="IsActive" class=" form-select form-select-lg mb-3" aria-label="Large select example">
+                    <option value="">Seçiniz</option>
+                    <option value="@true">Çalışıyor</option>
+                    <option value="@false">Çalışmıyor</option>
+                </select>
                 <span asp-validation-for="IsActive" class="text-danger"></span>
-            </div> *@
+            </div> 
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

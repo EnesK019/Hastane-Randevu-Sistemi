@@ -1,12 +1,10 @@
 ﻿@model Hastane_Randevu_Sistemi.Models.Hastane
-
+<link rel="stylesheet" href="~/css/index.css" />
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>Hastane</h4>
+<h4>Hastane Ekle</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -17,17 +15,14 @@
                 <input asp-for="HastaneAdi" class="form-control" />
                 <span asp-validation-for="HastaneAdi" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-
+<br />
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index"><img style="width: 40px; length: 25px;" src="~/images/geridon.png" /></a>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

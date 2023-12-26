@@ -159,6 +159,10 @@ namespace Hastane_Randevu_Sistemi.Controllers
             if (hastane != null)
             {
                 _context.Hastane.Remove(hastane);
+                //DENENMEDİ
+                //var silinecekPoliklinikler = _context.Poliklinik.Where(x => x.HastaneId == hastane.HastaneID).ToList();
+                //for(int i = 0; i < silinecekPoliklinikler.Count; i++)
+                //    silinecekPoliklinikler.RemoveAt(0);
             }
             
             await _context.SaveChangesAsync();
