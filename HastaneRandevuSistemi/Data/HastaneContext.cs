@@ -23,5 +23,7 @@ namespace Hastane_Randevu_Sistemi.Data
         public DbSet<Randevu> Randevu { get; set; }
         public DbSet<CalismaGunu> CalismaGunu { get; set; }
 
+
+
     }
 }

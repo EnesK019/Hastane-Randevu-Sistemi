@@ -33,7 +33,9 @@ namespace Hastane_Randevu_Sistemi.Controllers
         // GET: Poliklinik/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewData["doktorlar"] = _context.Doktor.Where(x => x.PoliklinikId == id);
             ViewData["hastaneler"] = _context.Hastane.ToList();
+            
             if (id == null || _context.Poliklinik == null)
             {
                 return NotFound();
@@ -41,6 +43,9 @@ namespace Hastane_Randevu_Sistemi.Controllers
 
             var poliklinik = await _context.Poliklinik
                 .FirstOrDefaultAsync(m => m.PoliklinikID == id);
+            
+
+
             if (poliklinik == null)
             {
                 return NotFound();

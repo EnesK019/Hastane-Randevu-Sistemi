@@ -1,8 +1,10 @@
 ﻿@model Hastane_Randevu_Sistemi.Models.Poliklinik
 
 @{
-    ViewData["Title"] = "Details";
-    var hastaneler = ViewData["hastaneler"] as List<Hastane>;
+	ViewData["Title"] = "Details";
+	var hastaneler = ViewData["hastaneler"] as List<Hastane>;
+	var hastane = hastaneler.Where(x => x.HastaneID == Model.HastaneId).First();
+	var doktorlar = ViewData["doktorlar"] as List<Doktor>;
 }
 
 <h1>Details</h1>
@@ -21,24 +23,60 @@
         <dt class="col-sm-2">
             Hastane Adı
         </dt>
-        @if (hastaneler.FirstOrDefault(p => p.HastaneID == Model.HastaneId) != null)
-        {
-            <dd class="col-sm-10">
-                @hastaneler.FirstOrDefault(p => p.HastaneID == Model.HastaneId).HastaneAdi
-            </dd>
-        }
-        else
-        {
-            <p>Kayıtlı Olduğu Hastane Bulunamadı</p>
-        }
-
+        <dd class="col-sm-9">
+            @hastane.HastaneAdi
+        </dd>
+        <dd class="col-sm-1"><a asp-action="Edit" asp-route-id="@Model.PoliklinikID"><img class="icon" src="~/images/düzenle.jpg" /></a></dd>
     </dl>
 </div>
 <div>
-    @if (User.IsInRole("Admin"))
-    {
-        <a asp-action="Edit" asp-route-id="@Model?.PoliklinikID">Edit</a>
-    }
-     |
-    <a asp-action="Index">Back to List</a>
+	<table class="table table-responsive-lg">
+		<thead>
+			<tr>
+				<th>
+					<h4 class="text-center">Doktorlar</h4>
+				</th>
+
+			</tr>
+		</thead>
+		@if (doktorlar != null)
+		{
+			@foreach (var item in doktorlar)
+			{
+				<tr>
+					<td>
+						<div class="row">
+							<div class="col-lg-10">
+								@Html.DisplayFor(modelItem => item.DoktorAd)
+							</div>
+							<div class="col-lg-2">
+								@if (User.IsInRole("Admin"))
+								{
+									<a asp-action="Details" asp-route-id="@item.DoktorID"><img class="icon" src="~/images/detail.png" /></a>
+									<a asp-action="Edit" asp-route-id="@item.DoktorID"><img class="icon" src="~/images/düzenle.jpg" /></a>
+									<a asp-action="Delete" asp-route-id="@item.DoktorID"><img class="icon" src="~/images/carpi.png" /></a>
+								}
+								else
+								{
+									<a asp-action="Details" asp-route-id="@item.DoktorID"><img class="icon" src="~/images/detail.png" /></a>
+								}
+							</div>
+						</div>
+					</td>
+				</tr>
+			}
+		}
+		else
+		{
+			<tr>
+				<td>
+					Bu Poliklinikte Doktor Bulunmamaktadır
+				</td>
+			</tr>
+		}
+	</table>
+</div>
+
+<div>
+	<a asp-action="Index"><img style="width: 40px; length: 25px;" src="~/images/geridon.png" /></a>
 </div>
