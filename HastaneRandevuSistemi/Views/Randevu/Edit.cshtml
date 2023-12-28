@@ -20,13 +20,23 @@
             </div>
             <div class="form-group">
                 <label asp-for="KullaniciId" class="control-label"></label>
-                <input asp-for="KullaniciId" class="form-control" />
+                <select asp-for="KullaniciId" class="form-control" asp-items="ViewBag.KullaniciId"></select>
                 <span asp-validation-for="KullaniciId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RandevuTarih" class="control-label"></label>
-                <input asp-for="RandevuTarih" class="form-control" />
-                <span asp-validation-for="RandevuTarih" class="text-danger"></span>
+                <label asp-for="RandevuGun" class="control-label"></label>
+                <input asp-for="RandevuGun" class="form-control" />
+                <span asp-validation-for="RandevuGun" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RandevuSaat" class="control-label"></label>
+                <input asp-for="RandevuSaat" class="form-control" />
+                <span asp-validation-for="RandevuSaat" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsEmpty" /> @Html.DisplayNameFor(model => model.IsEmpty)
+                </label>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

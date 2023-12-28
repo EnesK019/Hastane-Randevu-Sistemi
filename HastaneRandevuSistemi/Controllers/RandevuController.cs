@@ -7,17 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Hastane_Randevu_Sistemi.Data;
 using Hastane_Randevu_Sistemi.Models;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace Hastane_Randevu_Sistemi.Controllers
 {
     public class RandevuController : Controller
     {
         private readonly HastaneContext _context;
+        private readonly UserManager<Kullanici> _userManager;
 
-        public RandevuController(HastaneContext context)
+        public RandevuController(HastaneContext context, UserManager<Kullanici> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Randevu
@@ -47,10 +49,24 @@ namespace Hastane_Randevu_Sistemi.Controllers
         }
 
         // GET: Randevu/Create
-        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
+            ViewData["Hastaneler"] = _context.Hastane.ToList();
+            ViewData["Poliklinikler"] = _context.Poliklinik.ToList();
+            ViewData["Doktorlar"] = _context.Doktor.ToList();
             return View();
+        }
+
+        public async Task<IActionResult> GetPoliklinikler(int hastaneId)
+        {
+            var poliklinikler = await _context.Poliklinik.Where(p => p.HastaneId == hastaneId).ToListAsync();
+            return Json(poliklinikler);
+        }
+
+        public async Task<IActionResult> GetDoktorlar(int poliklinikId)
+        {
+            var doktorlar = await _context.Doktor.Where(d => d.PoliklinikId == poliklinikId).ToListAsync();
+            return Json(doktorlar);
         }
 
         // POST: Randevu/Create
@@ -58,9 +74,10 @@ namespace Hastane_Randevu_Sistemi.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("RandevuID,DoktorId,KullaniciId,RandevuTarih")] Randevu randevu)
+        public async Task<IActionResult> Create(Randevu randevu)
         {
+
+            randevu.KullaniciId = _userManager.GetUserId(User);
             if (ModelState.IsValid)
             {
                 _context.Add(randevu);
@@ -71,7 +88,6 @@ namespace Hastane_Randevu_Sistemi.Controllers
         }
 
         // GET: Randevu/Edit/5
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Randevu == null)
@@ -92,8 +108,7 @@ namespace Hastane_Randevu_Sistemi.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("RandevuID,DoktorId,KullaniciId,RandevuTarih")] Randevu randevu)
+        public async Task<IActionResult> Edit(int id, [Bind("RandevuID,DoktorId,KullaniciId,RandevuGun,RandevuSaat,IsEmpty")] Randevu randevu)
         {
             if (id != randevu.RandevuID)
             {
@@ -124,7 +139,6 @@ namespace Hastane_Randevu_Sistemi.Controllers
         }
 
         // GET: Randevu/Delete/5
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Randevu == null)
@@ -145,7 +159,6 @@ namespace Hastane_Randevu_Sistemi.Controllers
         // POST: Randevu/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Randevu == null)

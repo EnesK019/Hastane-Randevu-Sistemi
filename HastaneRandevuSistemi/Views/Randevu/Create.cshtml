@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Create";
+    TimeSpan time = new TimeSpan(10, 00, 00);
+    TimeSpan ekle = new TimeSpan(00, 30, 00);
 }
 
 <h1>Create</h1>
@@ -12,19 +14,50 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>
+                <label> Hastaneler</label>
+                <select class="form-select form-select-lg mb-3" aria-label="Large select example" onchange="GetPoliklinikler(this.value)">
+                    *
+                    @foreach (var item in ViewData["Hastaneler"] as List<Hastane>)
+                    {
+                        <option value="@item.HastaneID">@item.HastaneAdi</option>
+                    }
+                </select>
+            </div>
+            @* BURAYA GERİ DÖN
+                <div class="form-group">
+                <label asp-for="PoliklinikId" class="control-label"></label>
+                <select id="PoliklinikId" asp-for="PoliklinikId" class="form-select form-select-lg mb-3" aria-label="Large select example"></select>
+                <span asp-validation-for="PoliklinikId" class="text-danger"></span>
+            </div> *@
             <div class="form-group">
                 <label asp-for="DoktorId" class="control-label"></label>
-                <select asp-for="DoktorId" class ="form-control" asp-items="ViewBag.DoktorId"></select>
+                <select id="DoktorId" asp-for="DoktorId" class="form-select form-select-lg mb-3" aria-label="Large select example"></select>
+                <span asp-validation-for="DoktorId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="KullaniciId" class="control-label"></label>
-                <input asp-for="KullaniciId" class="form-control" />
-                <span asp-validation-for="KullaniciId" class="text-danger"></span>
+                <label asp-for="RandevuGun" class="control-label"></label>
+                <input asp-for="RandevuGun" class="form-control" />
+                <span asp-validation-for="RandevuGun" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RandevuTarih" class="control-label"></label>
-                <input asp-for="RandevuTarih" class="form-control" />
-                <span asp-validation-for="RandevuTarih" class="text-danger"></span>
+                <label asp-for="RandevuSaat" class="control-label"></label>
+                @for(int i = 1; i < 10; i++)
+                {
+                    <button asp-for="RandevuSaat" class="form-control" value="@time">@time</button>
+                    time = time.Add(ekle);
+                    if(i % 5 == 0)
+                    {
+                        <br />
+                    }
+                } 
+                @* <input asp-for="RandevuSaat" class="form-control" /> *@
+                <span asp-validation-for="RandevuSaat" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsEmpty" /> @Html.DisplayNameFor(model => model.IsEmpty)
+                </label>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -38,5 +71,27 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        function GetPoliklinikler(hastaneId) {
+            $.ajax({
+                url: '@Url.Action("GetPoliklinikler", "Doktor")',
+                data: { hastaneId: hastaneId },
+                type: 'GET',
+                success: function (poliklinikler) {
+                    $("#PoliklinikId").empty(); // Önceki seçenekleri temizle
+                    $("#PoliklinikId").append($('<option value="">Seçiniz</option>'));
+                    $.each(poliklinikler, function (index, poliklinik) {
+                        $("#PoliklinikId").append($('<option value="' + poliklinik.poliklinikID + '">' + poliklinik.poliklinikAdi + '</option>'));
+                    });
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        }
+    </script>
 }

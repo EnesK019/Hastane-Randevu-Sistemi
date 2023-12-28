@@ -4,6 +4,7 @@ using Hastane_Randevu_Sistemi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hastane_Randevu_Sistemi.Migrations
 {
     [DbContext(typeof(HastaneContext))]
-    partial class HastaneContextModelSnapshot : ModelSnapshot
+    [Migration("20231227231307_randevu_deneme1")]
+    partial class randevu_deneme1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -142,8 +144,8 @@ namespace Hastane_Randevu_Sistemi.Migrations
                     b.Property<DateTime>("RandevuGun")
                         .HasColumnType("datetime2");
 
-                    b.Property<TimeSpan>("RandevuSaat")
-                        .HasColumnType("time");
+                    b.Property<DateTime>("RandevuSaat")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("RandevuID");
 

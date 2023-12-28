@@ -4,6 +4,7 @@ using Hastane_Randevu_Sistemi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hastane_Randevu_Sistemi.Migrations
 {
     [DbContext(typeof(HastaneContext))]
-    partial class HastaneContextModelSnapshot : ModelSnapshot
+    [Migration("20231227230359_randevu_deneme")]
+    partial class randevu_deneme
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,18 +134,12 @@ namespace Hastane_Randevu_Sistemi.Migrations
                     b.Property<int>("DoktorId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsEmpty")
-                        .HasColumnType("bit");
-
                     b.Property<string>("KullaniciId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("RandevuGun")
                         .HasColumnType("datetime2");
-
-                    b.Property<TimeSpan>("RandevuSaat")
-                        .HasColumnType("time");
 
                     b.HasKey("RandevuID");
 
@@ -152,6 +148,27 @@ namespace Hastane_Randevu_Sistemi.Migrations
                     b.HasIndex("KullaniciId");
 
                     b.ToTable("Randevu");
+                });
+
+            modelBuilder.Entity("Hastane_Randevu_Sistemi.Models.Saat", b =>
+                {
+                    b.Property<int>("SaatID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SaatID"), 1L, 1);
+
+                    b.Property<int>("RandevuId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("RandevuSaat")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("SaatID");
+
+                    b.HasIndex("RandevuId");
+
+                    b.ToTable("Saat");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -423,6 +440,15 @@ namespace Hastane_Randevu_Sistemi.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Hastane_Randevu_Sistemi.Models.Saat", b =>
+                {
+                    b.HasOne("Hastane_Randevu_Sistemi.Models.Randevu", null)
+                        .WithMany("Saatler")
+                        .HasForeignKey("RandevuId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -489,6 +515,11 @@ namespace Hastane_Randevu_Sistemi.Migrations
             modelBuilder.Entity("Hastane_Randevu_Sistemi.Models.Poliklinik", b =>
                 {
                     b.Navigation("Doktorlar");
+                });
+
+            modelBuilder.Entity("Hastane_Randevu_Sistemi.Models.Randevu", b =>
+                {
+                    b.Navigation("Saatler");
                 });
 
             modelBuilder.Entity("Hastane_Randevu_Sistemi.Models.Kullanici", b =>

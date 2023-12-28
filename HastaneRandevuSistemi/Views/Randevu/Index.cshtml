@@ -13,10 +13,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.KullaniciId)
+                @Html.DisplayNameFor(model => model.RandevuGun)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RandevuTarih)
+                @Html.DisplayNameFor(model => model.RandevuSaat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsEmpty)
             </th>
             <th></th>
         </tr>
@@ -25,10 +28,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.KullaniciId)
+                @Html.DisplayFor(modelItem => item.RandevuGun)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RandevuTarih)
+                @Html.DisplayFor(modelItem => item.RandevuSaat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsEmpty)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.RandevuID">Edit</a> |
@@ -39,6 +45,3 @@
 }
     </tbody>
 </table>
-<div>
-    <a class="w-100 btn btn-lg btn-primary " asp-controller="Randevu" asp-action="Create">Ekle</a>
-</div>
