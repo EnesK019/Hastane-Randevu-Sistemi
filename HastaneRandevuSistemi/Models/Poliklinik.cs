@@ -15,7 +15,7 @@ namespace Hastane_Randevu_Sistemi.Models
         [Required]
         [Display(Name = "Hastane")]
         public int HastaneId { get; set; }
-        public Hastane? hastane { get; set; }
+        
         public ICollection<Doktor>? Doktorlar { get; set; }
     }
 }

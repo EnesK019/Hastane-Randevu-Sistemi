@@ -1,12 +1,13 @@
 ﻿@model Hastane_Randevu_Sistemi.Models.Hastane
 @{
     ViewData["Title"] = "Edit";
+    var hastane = ViewData["hastane"] as Hastane;
 }
 <h4>Hastaneyi Düzenle</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-controller="Hastane" asp-action="Edit" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="HastaneID" />
             <div class="form-group">

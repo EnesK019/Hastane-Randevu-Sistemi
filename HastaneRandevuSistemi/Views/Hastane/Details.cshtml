@@ -1,6 +1,7 @@
 ﻿@model Hastane_Randevu_Sistemi.Models.Hastane
 @{
 	ViewData["Title"] = "Details";
+	var hastane = ViewData["Hastane"] as Hastane;
 }
 <div>
 	<h3>Hastane Detayları</h3>
@@ -10,7 +11,7 @@
 			@Html.DisplayNameFor(model => model.HastaneAdi)
 		</dt>
 		<dd class="col-sm-9">
-			@Html.DisplayFor(model => model.HastaneAdi)
+			@hastane.HastaneAdi
 		</dd>
 		<dd class="col-sm-1"><a asp-action="Edit" asp-route-id="@Model.HastaneID"><img class="icon" src="~/images/düzenle.jpg" /></a></dd>
 	</dl>

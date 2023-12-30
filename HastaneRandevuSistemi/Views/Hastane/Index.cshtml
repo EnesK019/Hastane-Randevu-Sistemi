@@ -21,7 +21,7 @@
 						<div class="col-lg-10">
 							@Html.DisplayFor(modelItem => item.HastaneAdi)
 						</div>
-						<div class="col-lg-2">
+							<div class="col-lg-2">
 							@if (User.IsInRole("Admin"))
 							{
 								<a asp-action="Details" asp-route-id="@item.HastaneID"><img class="icon" src="~/images/detail.png" /></a>
@@ -38,7 +38,43 @@
 			</tr>
 		}
 	</tbody>
-</table>
-<div class="text-center">
+</table> 
+<div class="text-center
 	<a asp-action="Create" asp-route-id=""><img style="width: 45px; height: 45px;" src="~/images/arti.jpg" /></a>
 </div>
+
+
+
+
+@* <h3>Api den çekilen datalar</h3>
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.HastaneID)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.HastaneAdi)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.HastaneID)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.HastaneAdi)
+				</td>
+				<td>
+					<a asp-action="Edit" asp-route-id="@item.HastaneID">Edit</a> |
+					<a asp-action="Details" asp-route-id="@item.HastaneID">Details</a> |
+					<a asp-action="Delete" asp-route-id="@item.HastaneID">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table> *@
