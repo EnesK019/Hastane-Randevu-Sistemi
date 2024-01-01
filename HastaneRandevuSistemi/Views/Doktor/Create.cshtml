@@ -4,10 +4,7 @@
     ViewData["Title"] = "Create";
     
 }
-
-<h1>Create</h1>
-
-<h4>Doktor</h4>
+<h4>Doktor Ekle</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -25,9 +22,9 @@
             </div>
             <br />
             <div>
-                <label> Hastaneler</label>
+                <label> Hastane</label>
                 <select class="form-select form-select-lg mb-3" aria-label="Large select example" onchange="GetPoliklinikler(this.value)">
-                    *
+                    <option value="">Seçiniz</option>
                     @foreach (var item in ViewData["Hastaneler"] as List<Hastane>)
                     {
                         <option value="@item.HastaneID">@item.HastaneAdi</option>
@@ -46,12 +43,10 @@
     </div>
 </div>
 
-
-
-
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index"><img style="width: 40px; length: 25px;" src="~/images/geridon.png" /></a>
 </div>
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

@@ -1,6 +1,7 @@
 ﻿@model Hastane_Randevu_Sistemi.Models.Poliklinik
 @{
     ViewData["Title"] = "Create";
+    
 }
 <h4>Poliklinik Ekle</h4>
 <hr />
@@ -17,6 +18,7 @@
             <div class="form-group">
                 <label asp-for="HastaneId" class="control-label"></label>
                 <select asp-for="HastaneId" class="form-select form-select-lg mb-3" aria-label="Large select example">
+                    <option value="">Seçiniz</option>
                         @foreach(var item in ViewData["hastaneler"] as List<Hastane>)
                         {
                             <option  value="@item.HastaneID">@item.HastaneAdi</option>

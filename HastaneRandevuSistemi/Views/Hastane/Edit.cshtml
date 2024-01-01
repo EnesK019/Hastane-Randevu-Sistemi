@@ -3,7 +3,7 @@
     ViewData["Title"] = "Edit";
     var hastane = ViewData["hastane"] as Hastane;
 }
-<h4>Hastaneyi Düzenle</h4>
+<h4>@_localization.Getkey("HastaneDuzen")</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -11,13 +11,13 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="HastaneID" />
             <div class="form-group">
-                <label asp-for="HastaneAdi" class="control-label"></label>
+                <label>@_localization.Getkey("HastaneAdi")</label>
                 <input asp-for="HastaneAdi" class="form-control" />
                 <span asp-validation-for="HastaneAdi" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="@_localization.Getkey("Kaydet")" class="btn btn-primary" />
             </div>
         </form>
     </div>

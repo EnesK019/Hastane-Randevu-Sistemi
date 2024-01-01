@@ -6,11 +6,8 @@
 	var hastane = hastaneler.Where(x => x.HastaneID == Model.HastaneId).First();
 	var doktorlar = ViewData["doktorlar"] as List<Doktor>;
 }
-
-<h1>Details</h1>
-
 <div>
-    <h4>Poliklinik</h4>
+    <h4>Poliklinik Detayları</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">

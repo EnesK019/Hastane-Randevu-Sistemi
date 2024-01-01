@@ -4,6 +4,7 @@ using Hastane_Randevu_Sistemi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hastane_Randevu_Sistemi.Migrations
 {
     [DbContext(typeof(HastaneContext))]
-    partial class HastaneContextModelSnapshot : ModelSnapshot
+    [Migration("20240101165059_denememig")]
+    partial class denememig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +23,33 @@ namespace Hastane_Randevu_Sistemi.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Hastane_Randevu_Sistemi.Models.CalismaGunu", b =>
+                {
+                    b.Property<int>("CalismaGunID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CalismaGunID"), 1L, 1);
+
+                    b.Property<int>("DoktorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Gunler")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("nvarchar(7)");
+
+                    b.Property<string>("Saatler")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CalismaGunID");
+
+                    b.HasIndex("DoktorId");
+
+                    b.ToTable("CalismaGunu");
+                });
 
             modelBuilder.Entity("Hastane_Randevu_Sistemi.Models.Doktor", b =>
                 {
@@ -105,7 +134,7 @@ namespace Hastane_Randevu_Sistemi.Migrations
                     b.Property<int>("DoktorId")
                         .HasColumnType("int");
 
-                    b.Property<bool?>("IsEmpty")
+                    b.Property<bool>("IsEmpty")
                         .HasColumnType("bit");
 
                     b.Property<string>("KullaniciId")
@@ -350,6 +379,15 @@ namespace Hastane_Randevu_Sistemi.Migrations
                     b.HasDiscriminator().HasValue("Kullanici");
                 });
 
+            modelBuilder.Entity("Hastane_Randevu_Sistemi.Models.CalismaGunu", b =>
+                {
+                    b.HasOne("Hastane_Randevu_Sistemi.Models.Doktor", null)
+                        .WithMany("CalismaGunleri")
+                        .HasForeignKey("DoktorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Hastane_Randevu_Sistemi.Models.Doktor", b =>
                 {
                     b.HasOne("Hastane_Randevu_Sistemi.Models.Poliklinik", null)
@@ -436,6 +474,8 @@ namespace Hastane_Randevu_Sistemi.Migrations
 
             modelBuilder.Entity("Hastane_Randevu_Sistemi.Models.Doktor", b =>
                 {
+                    b.Navigation("CalismaGunleri");
+
                     b.Navigation("Randevular");
                 });
 

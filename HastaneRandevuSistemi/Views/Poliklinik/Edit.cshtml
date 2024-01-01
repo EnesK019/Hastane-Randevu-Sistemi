@@ -3,10 +3,7 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
-<h1>Edit</h1>
-
-<h4>Poliklinik</h4>
+<h4>Poliklinik Düzenle</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -18,6 +15,7 @@
                 <input asp-for="PoliklinikAdi" class="form-control" />
                 <span asp-validation-for="PoliklinikAdi" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
                     <label asp-for="HastaneId" class="control-label"></label>
 
@@ -30,15 +28,16 @@
 
                     <span asp-validation-for="HastaneId" class="text-danger"></span>
             </div>
+            
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-
+<br />
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index"><img style="width: 40px; length: 25px;" src="~/images/geridon.png" /></a>
 </div>
 
 @section Scripts {

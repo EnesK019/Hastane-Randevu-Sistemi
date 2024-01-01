@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Hastane_Randevu_Sistemi.Models.Randevu>
+
+@{
+    ViewData["Title"] = "RandevuList";
+}
+
+<h1>Randevu Listesi</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RandevuGun)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RandevuSaat)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.RandevuGun
+            </td>
+            <td>
+                @item.RandevuSaat
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.RandevuID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.RandevuID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.RandevuID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -33,6 +33,7 @@ namespace Hastane_Randevu_Sistemi.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             ViewData["Poliklinikler"] = _context.Poliklinik.ToList();
+            ViewData["Hastaneler"] = _context.Hastane.ToList();
             if (id == null || _context.Doktor == null)
             {
                 return NotFound();
@@ -73,10 +74,9 @@ namespace Hastane_Randevu_Sistemi.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(Doktor doktor)
         {
-            
+            doktor.IsActive = true;
             if (ModelState.IsValid)
-            {
-                
+            {  
                 _context.Add(doktor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -169,7 +169,7 @@ namespace Hastane_Randevu_Sistemi.Controllers
             {
                 return Problem("Entity set 'HastaneContext.Doktor'  is null.");
             }
-            var doktor = await _context.Doktor.FindAsync(id);
+            var doktor = await _context.Doktor.Include(x => x.Randevular).Where(x => x.DoktorID == id).FirstOrDefaultAsync(); ;
             if (doktor != null)
             {
                 _context.Doktor.Remove(doktor);

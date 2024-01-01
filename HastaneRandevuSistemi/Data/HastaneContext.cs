@@ -13,17 +13,16 @@ namespace Hastane_Randevu_Sistemi.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb; Database=Hastane; Trusted_Connection = True;");
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb; Database=Hastane3; Trusted_Connection = True;");
         }
 
-        public DbSet<Kullanici> Kullanicilar { get; set; }
+		public DbSet<Kullanici> Kullanicilar { get; set; }
         public DbSet<Hastane> Hastane { get; set; }
         public DbSet<Poliklinik> Poliklinik { get; set; }
         public DbSet<Doktor> Doktor { get; set; }
         public DbSet<Randevu> Randevu { get; set; }
-        public DbSet<CalismaGunu> CalismaGunu { get; set; }
 
-
+        
 
     }
 }

@@ -4,11 +4,11 @@
 	var hastane = ViewData["Hastane"] as Hastane;
 }
 <div>
-	<h3>Hastane Detayları</h3>
+	<h3>@_localization.Getkey("HastaneDetay")</h3>
 	<hr />
 	<dl class="row">
 		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.HastaneAdi)
+			@_localization.Getkey("HastaneAdi")
 		</dt>
 		<dd class="col-sm-9">
 			@hastane.HastaneAdi
@@ -22,32 +22,43 @@
 		<thead>
 			<tr>
 				<th>
-					<h4 class="text-center">Poliklinikler</h4>
+					<h4 class="text-center">@_localization.Getkey("Poliklinikler")</h4>
 				</th>
 
 			</tr>
 		</thead>
-		@foreach (var item in ViewData["Poliklinikler"] as List<Poliklinik>)
+		@if (ViewData["Poliklinikler"] != null)
+		{
+			@foreach (var item in ViewData["Poliklinikler"] as List<Poliklinik>)
+			{
+				<tr>
+					<td>
+						<div class="row">
+							<div class="col-lg-10">
+								@Html.DisplayFor(modelItem => item.PoliklinikAdi)
+							</div>
+							<div class="col-lg-2">
+								@if (User.IsInRole("Admin"))
+								{
+									<a asp-action="Details" asp-route-id="@item.PoliklinikID"><img class="icon" src="~/images/detail.png" /></a>
+									<a asp-action="Edit" asp-route-id="@item.PoliklinikID"><img class="icon" src="~/images/düzenle.jpg" /></a>
+									<a asp-action="Delete" asp-route-id="@item.PoliklinikID"><img class="icon" src="~/images/carpi.png" /></a>
+								}
+								else
+								{
+									<a asp-action="Details" asp-route-id="@item.PoliklinikID"><img class="icon" src="~/images/detail.png" /></a>
+								}
+							</div>
+						</div>
+					</td>
+				</tr>
+			}
+		}
+		else
 		{
 			<tr>
 				<td>
-					<div class="row">
-						<div class="col-lg-10">
-							@Html.DisplayFor(modelItem => item.PoliklinikAdi)
-						</div>
-						<div class="col-lg-2">
-							@if (User.IsInRole("Admin"))
-							{
-								<a asp-action="Details" asp-route-id="@item.PoliklinikID"><img class="icon" src="~/images/detail.png" /></a>
-								<a asp-action="Edit" asp-route-id="@item.PoliklinikID"><img class="icon" src="~/images/düzenle.jpg" /></a>
-								<a asp-action="Delete" asp-route-id="@item.PoliklinikID"><img class="icon" src="~/images/carpi.png" /></a>
-							}
-							else
-							{
-								<a asp-action="Details" asp-route-id="@item.PoliklinikID"><img class="icon" src="~/images/detail.png" /></a>
-							}
-						</div>
-					</div>
+					Bu Hastanede Poliklinik Bulunmamaktadır
 				</td>
 			</tr>
 		}

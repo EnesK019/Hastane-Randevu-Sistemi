@@ -1,41 +1,64 @@
 ﻿@model IEnumerable<Hastane_Randevu_Sistemi.Models.Randevu>
 
 @{
-    ViewData["Title"] = "Index";
+	ViewData["Title"] = "Index";
+	var doktorlar = ViewData["Doktorlar"] as List<Doktor>;
 }
+<h3>Randevular</h3>
+<table class="table table-responsive-lg">
+	<thead>
+		<tr>
+			<th>
+				<div class="row">
+					<div class="col-lg-3">
+						<h5 style="margin-top: 15px;">Randevu Günü</h5>
+					</div>
+					<div class="col-lg-3">
+						<h5 style ="margin-top: 15px;">Randevu Saati</h5>
+					</div>
+					<div class="col-lg-4">
+						<h5 style="margin-top: 15px;">Doktor</h5>
+					</div>
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.RandevuGun)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsEmpty)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RandevuGun)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsEmpty)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.RandevuID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.RandevuID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.RandevuID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					<div class="row">
+						<div class="col-lg-3">
+							@item.RandevuGun.ToString().Substring(0,10)
+						</div>
+						<div class="col-lg-3">
+							@item.RandevuSaat
+						</div>
+						<div class="col-lg-4">
+							@{
+								var doktor = doktorlar.FirstOrDefault(x => x.DoktorID == item.DoktorId);
+							}
+							@doktor.DoktorAd @doktor.DoktorSoyad
+						</div>
+						<div class="col-lg-2">
+							@if (User.IsInRole("Admin"))
+							{
+								<a asp-action="Details" asp-route-id="@item.RandevuID"><img class="icon" src="~/images/detail.png" /></a>
+								<a asp-action="Edit" asp-route-id="@item.RandevuID"><img class="icon" src="~/images/düzenle.jpg" /></a>
+								<a asp-action="Delete" asp-route-id="@item.RandevuID"><img class="icon" src="~/images/carpi.png" /></a>
+							}
+							else
+							{
+								<a asp-action="Details" asp-route-id="@item.RandevuID"><img class="icon" src="~/images/detail.png" /></a>
+							}
+						</div>
+					</div>
+				</td>
+			</tr>
+		}
+	</tbody>
 </table>
+<div class="text-center">
+	<a asp-action="Create" asp-route-id=""><img style="width: 45px; height: 45px;" src="~/images/arti.jpg" /></a>
+</div>

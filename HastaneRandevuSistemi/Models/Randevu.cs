@@ -21,6 +21,6 @@ namespace Hastane_Randevu_Sistemi.Models
         [DataType(DataType.DateTime), Display(Name = "Randevu Saati"), DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
         [Required]
         public TimeSpan RandevuSaat { get; set; }
-        public bool IsEmpty { get; set; }
+        public bool? IsEmpty { get; set; }
     }
 }

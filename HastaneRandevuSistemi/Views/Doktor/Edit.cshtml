@@ -18,11 +18,13 @@
                 <input asp-for="DoktorAd" class="form-control" />
                 <span asp-validation-for="DoktorAd" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
                 <label asp-for="DoktorSoyad" class="control-label"></label>
                 <input asp-for="DoktorSoyad" class="form-control" />
                 <span asp-validation-for="DoktorSoyad" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
                 <label> Hastaneler </label>
                 <select class="form-select form-select-lg mb-3" aria-label="Large select example" onchange="GetPoliklinikler(this.value)">
@@ -57,9 +59,9 @@
         </form>
     </div>
 </div>
-
+<br />
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index"><img style="width: 40px; length: 25px;" src="~/images/geridon.png" /></a>
 </div>
 
 @section Scripts {

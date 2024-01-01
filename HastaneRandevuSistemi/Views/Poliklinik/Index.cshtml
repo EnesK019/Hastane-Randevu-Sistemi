@@ -2,13 +2,21 @@
 
 @{
     ViewData["Title"] = "Index";
+	var hastaneler = ViewData["Hastaneler"] as List<Hastane>;
 }
 
 <table class="table table-responsive-lg">
 	<thead>
 		<tr>
 			<th>
-				<h3 class="text-center">Poliklinikler</h3>
+				<div class="row">
+					<div class="col-lg-4">
+						<h3>Poliklinikler</h3>
+					</div>
+					<div class="col-lg-6">
+						<h5 style="margin-top: 15px;">Hastane</h5>
+					</div>
+				
 			</th>
 		</tr>
 	</thead>
@@ -18,8 +26,12 @@
 			<tr>
 				<td>
 					<div class="row">
-						<div class="col-lg-10">
+						<div class="col-lg-4">
 							@Html.DisplayFor(modelItem => item.PoliklinikAdi)
+						</div>
+						<div class="col-lg-6">
+							@{var hastane = hastaneler.FirstOrDefault(x => x.HastaneID == item.HastaneId);}
+							@hastane.HastaneAdi
 						</div>
 						<div class="col-lg-2">
 							@if (User.IsInRole("Admin"))

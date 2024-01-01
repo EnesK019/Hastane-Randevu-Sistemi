@@ -2,29 +2,77 @@
 
 @{
     ViewData["Title"] = "Details";
+    var hastaneler = ViewData["Hastaneler"] as List<Hastane>;
+    var doktorlar = ViewData["Doktorlar"] as List<Doktor>;
+    var kullanıcılar = ViewData["Kullanıcılar"] as List<Kullanici>;
+    var poliklinikler = ViewData["Poliklinikler"] as List<Poliklinik>;
+    var kullanici = kullanıcılar.FirstOrDefault(x => x.Id == Model.KullaniciId);
+    Doktor doktor = null;
+    Poliklinik poliklinik = null;
+
 }
 
 <h1>Details</h1>
 
 <div>
-    <h4>Randevu</h4>
+    <h4>Doktor</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RandevuGun)
+        <dt class="col-sm-4">
+            Hasta
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RandevuGun)
+        <dd class="col-sm-8">
+            @kullanici.KullaniciAd @kullanici.KullaniciSoyAd
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsEmpty)
+        <dt class="col-sm-4">
+            Randevu Günü  -  Randevu Saati
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsEmpty)
+        <dd class="col-sm-8">
+            @Model.RandevuGun.ToString().Substring(0,10)  -  @Model.RandevuSaat
         </dd>
+        <dt class="col-sm-4">
+            Poliklinik Adı
+        </dt>
+        <dd class="col-sm-8">
+            @if (doktorlar.FirstOrDefault(p => p.DoktorID == Model.DoktorId) != null)
+            {
+
+                doktor = doktorlar.FirstOrDefault(p => p.DoktorID == Model.DoktorId);
+                <label>@doktor.DoktorAd @doktor.DoktorSoyad</label>
+
+            }
+            else
+            {
+                <p>Kayıtlı Olduğu Randevunun doktoru Bulunamadı</p>
+            }
+        </dd>
+        @if (doktor != null)
+        {
+            <dt class="col-sm-4">
+                Poliklinik Adı
+            </dt>
+            <dd class="col-sm-8">
+                @{
+                    poliklinik = poliklinikler.FirstOrDefault(x => x.PoliklinikID == doktor.PoliklinikId);
+                }
+                @poliklinik.PoliklinikAdi
+            </dd>
+        }
+        @if (poliklinik != null)
+        {
+            <dt class="col-sm-4">
+                Hastane Adı
+            </dt>
+            <dd class="col-sm-8">
+                @{
+                    var hastane = hastaneler.FirstOrDefault(x => x.HastaneID == poliklinik.HastaneId);
+                }
+                @hastane.HastaneAdi
+            </dd>
+        }
     </dl>
 </div>
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.RandevuID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index"><img style="width: 40px; length: 25px;" src="~/images/geridon.png" /></a>
 </div>

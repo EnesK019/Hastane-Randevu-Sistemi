@@ -2,48 +2,124 @@
 
 @{
     ViewData["Title"] = "Edit";
+	var hastaneler = ViewData["Hastaneler"] as List<Hastane>;
+	var kullanıcılar = ViewData["Kullanıcılar"] as List<Kullanici>;
 }
 
-<h1>Edit</h1>
+<h4>Randevuyu Düzenle</h4>
 
-<h4>Randevu</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="RandevuID" />
-            <div class="form-group">
-                <label asp-for="DoktorId" class="control-label"></label>
-                <select asp-for="DoktorId" class="form-control" asp-items="ViewBag.DoktorId"></select>
-                <span asp-validation-for="DoktorId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="KullaniciId" class="control-label"></label>
-                <select asp-for="KullaniciId" class="form-control" asp-items="ViewBag.KullaniciId"></select>
-                <span asp-validation-for="KullaniciId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RandevuGun" class="control-label"></label>
-                <input asp-for="RandevuGun" class="form-control" />
-                <span asp-validation-for="RandevuGun" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsEmpty" /> @Html.DisplayNameFor(model => model.IsEmpty)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+	<div class="col-md-4">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div>
+				<label> Hastane</label>
+				<select class="form-select form-select-lg mb-3" aria-label="Large select example" onchange="GetPoliklinikler(this.value)">
+					<option value="">Seçiniz</option>
+					@foreach (var item in hastaneler)
+					{
+						<option value="@item.HastaneID">@item.HastaneAdi</option>
+					}
+				</select>
+			</div>
+			<div>
+				<label> Poliklinik</label>
+				<select id="PoliklinikId" class="form-select form-select-lg mb-3" aria-label="Large select example" onchange="GetDoktorlar(this.value)">
+				</select>
+			</div>
+			<div class="form-group">
+				<label class="control-label">Doktor</label>
+				<select id="DoktorId" asp-for="DoktorId" class="form-select form-select-lg mb-3" aria-label="Large select example"></select>
+				<span asp-validation-for="DoktorId" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label>Hasta</label>
+				<select asp-for="KullaniciId" class="form-select form-select-lg mb-3" aria-label="Large select example">
+					<option value="">Seçiniz</option>
+					@foreach (var item in kullanıcılar)
+					{
+						<option value="@item.Id">@item.KullaniciAd @item.KullaniciSoyAd</option>
+					}
+				</select>
+				<span asp-validation-for="KullaniciId" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="RandevuGun" class="control-label "></label>
+				<input asp-for="RandevuGun" class="form-control form-control-lg" />
+				<span asp-validation-for="RandevuGun" class="text-danger"></span>
+			</div>
+			<br />
+			<divclass ="form-group">
+				<label asp-for="RandevuSaat" class="control-label "></label>
+				<select asp-for="RandevuSaat" class="form-select form-select-lg mb-3" aria-label="Large select example">
+					<option value="">Seçiniz</option>
+					<option value="09:00">09:00</option>
+					<option value="09:30">09:30</option>
+					<option value="10:00">10:00</option>
+					<option value="10:30">10:30</option>
+					<option value="11:00">11:00</option>
+					<option value="11:30">11:30</option>
+					<option value="12:00">12:00</option>
+					<option value="13:30">13:30</option>
+					<option value="14:00">14:00</option>
+					<option value="14:30">14:30</option>
+					<option value="15:00">15:00</option>
+					<option value="15:30">15:30</option>
+					<option value="16:00">16:00</option>
+					<option value="16:30">16:30</option>
+				</select>
+				<span asp-validation-for="RandevuSaat" class="text-danger"></span>
+			</divclass>
+			<div class="form-group">
+				<input type="submit" value="Create" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
 </div>
-
+<br />
 <div>
-    <a asp-action="Index">Back to List</a>
+	<a asp-action="Index"><img style="width: 40px; length: 25px;" src="~/images/geridon.png" /></a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+
+	<script>
+		function GetPoliklinikler(hastaneId) {
+			$.ajax({
+				url: '@Url.Action("GetPoliklinikler", "Randevu")',
+				data: { hastaneId: hastaneId },
+				type: 'GET',
+				success: function (poliklinikler) {
+					$("#PoliklinikId").empty(); // Önceki seçenekleri temizle
+					$("#PoliklinikId").append($('<option value="">Seçiniz</option>'));
+					$.each(poliklinikler, function (index, poliklinik) {
+						$("#PoliklinikId").append($('<option value="' + poliklinik.poliklinikID + '">' + poliklinik.poliklinikAdi + '</option>'));
+					});
+				},
+				error: function (error) {
+					console.error(error);
+				}
+			});
+		}
+		function GetDoktorlar(poliklinikId) {
+			$.ajax({
+				url: '@Url.Action("GetDoktorlar", "Randevu")',
+				data: { poliklinikId: poliklinikId },
+				type: 'GET',
+				success: function (doktorlar) {
+					$("#DoktorId").empty(); // Önceki seçenekleri temizle
+					$("#DoktorId").append($('<option value="">Seçiniz</option>'));
+					$.each(doktorlar, function (index, doktor) {
+						$("#DoktorId").append($('<option value="' + doktor.doktorID + '">' + doktor.doktorAd + '</option>'));
+					});
+				},
+				error: function (error) {
+					console.error(error);
+				}
+			});
+		}
+	</script>
 }

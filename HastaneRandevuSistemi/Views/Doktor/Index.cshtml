@@ -1,58 +1,70 @@
 ﻿@model IEnumerable<Hastane_Randevu_Sistemi.Models.Doktor>
 
 @{
-    ViewData["Title"] = "Index";
+	ViewData["Title"] = "Index";
+	var poliklinikler = ViewData["Poliklinikler"] as List<Poliklinik>;
 }
+<table class="table table-responsive-lg">
+	<thead>
+		<tr>
+			<th>
+				<div class="row">
+					<div class="col-lg-4">
+						<h3>Doktorlar</h3>
+					</div>
+					<div class="col-lg-4">
+						<h5 style="margin-top: 15px;">Poliklinik</h5>
+					</div>
+					<div class="col-lg-2">
+						<h5 style="margin-top: 15px;">Çalışma Durumu</h5>
+					</div>
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.DoktorAd)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DoktorSoyad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DoktorAd)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DoktorSoyad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-                @if (User.IsInRole("Admin"))
-                {
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.DoktorID">edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.DoktorID">details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.DoktorID">delete</a>
-                    </td>
-                }
-                else
-                {
-                    <td><a asp-action="Details" asp-route-id="@item.DoktorID">details</a></td>
-                }
-        </tr>
-}
-    </tbody>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					<div class="row">
+						<div class="col-lg-4">
+							@Html.DisplayFor(modelItem => item.DoktorAd) @Html.DisplayFor(modelItem => item.DoktorSoyad)
+						</div>
+						<div class="col-lg-4">
+							@{
+								var poliklinik = poliklinikler.FirstOrDefault(x => x.PoliklinikID == item.PoliklinikId);
+							}
+							@poliklinik.PoliklinikAdi
+						</div>
+						<div class="col-lg-2">
+							@if (item.IsActive == true)
+							{
+								<label>Çalışıyor</label>
+							}
+							else
+							{
+								<label>Çalışmıyor</label>
+							}
+						</div>
+						<div class="col-lg-2">
+							@if (User.IsInRole("Admin"))
+							{
+								<a asp-action="Details" asp-route-id="@item.DoktorID"><img class="icon" src="~/images/detail.png" /></a>
+								<a asp-action="Edit" asp-route-id="@item.DoktorID"><img class="icon" src="~/images/düzenle.jpg" /></a>
+								<a asp-action="Delete" asp-route-id="@item.DoktorID"><img class="icon" src="~/images/carpi.png" /></a>
+							}
+							else
+							{
+								<a asp-action="Details" asp-route-id="@item.DoktorID"><img class="icon" src="~/images/detail.png" /></a>
+							}
+						</div>
+					</div>
+				</td>
+			</tr>
+		}
+	</tbody>
 </table>
-<br />
-<div>
-    <a class="w-100 btn btn-lg btn-primary " asp-controller="Doktor" asp-action="Create">Ekle</a>
+<div class="text-center">
+	<a asp-action="Create" asp-route-id=""><img style="width: 45px; height: 45px;" src="~/images/arti.jpg" /></a>
 </div>

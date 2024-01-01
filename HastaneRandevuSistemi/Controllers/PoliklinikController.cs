@@ -25,6 +25,7 @@ namespace Hastane_Randevu_Sistemi.Controllers
         // GET: Poliklinik
         public async Task<IActionResult> Index()
         {
+            ViewData["Hastaneler"] = _context.Hastane.ToList();
             return _context.Poliklinik != null ? 
                           View(await _context.Poliklinik.ToListAsync()) :
                           Problem("Entity set 'HastaneContext.Poliklinik'  is null.");
@@ -174,7 +175,7 @@ namespace Hastane_Randevu_Sistemi.Controllers
             {
                 return Problem("Entity set 'HastaneContext.Poliklinik'  is null.");
             }
-            var poliklinik = await _context.Poliklinik.FindAsync(id);
+            var poliklinik = await _context.Poliklinik.Include(x => x.Doktorlar).Where(x => x.PoliklinikID == id).FirstOrDefaultAsync(); ;
             if (poliklinik != null)
             {
                 _context.Poliklinik.Remove(poliklinik);
